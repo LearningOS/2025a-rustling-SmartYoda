@@ -70,14 +70,33 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+    {
+        //TODO
+        let mut list_c = LinkedList::new();
+        let mut pa = list_a.start;
+        let mut pb = list_b.start;
+        while let (Some(na), Some(nb)) = (pa, pb) {
+            unsafe {
+                let va = &(*na.as_ptr()).val;
+                let vb = &(*nb.as_ptr()).val;
+                if va <= vb {
+                    list_c.add(va.clone());
+                    pa = (*na.as_ptr()).next;
+                } else {
+                    list_c.add(vb.clone());
+                    pb = (*nb.as_ptr()).next;
+                }
+            }
         }
-	}
+        let mut rest = if pa.is_some() { pa } else { pb };
+        while let Some(nn) = rest {
+            unsafe {
+                list_c.add((*nn.as_ptr()).val.clone());
+                rest = (*nn.as_ptr()).next;
+            }
+        }
+        list_c
+    }
 }
 
 impl<T> Display for LinkedList<T>

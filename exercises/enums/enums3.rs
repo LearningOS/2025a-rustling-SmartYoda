@@ -5,18 +5,23 @@
 // Execute `rustlings hint enums3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 enum Message {
     ChangeColor(u8, u8, u8),
     Quit,
     Echo(String),
-    Move { x: u8, y: u8 },
+    Move(Point),
 }
 
 struct Point {
     x: u8,
     y: u8,
+}
+
+impl Point {
+    fn new(x: u8, y: u8) -> Point {
+        Point { x, y }
+    }
 }
 
 struct State {
@@ -27,8 +32,8 @@ struct State {
 }
 
 impl State {
-    fn change_color(&mut self, color: (u8, u8, u8)) {
-        self.color = color;
+    fn change_color(&mut self, r: u8, g: u8, b: u8) {
+        self.color = (r, g, b);
     }
 
     fn quit(&mut self) {
@@ -46,7 +51,7 @@ impl State {
             Message::ChangeColor(r, g, b) => self.change_color(r, g, b),
             Message::Quit => self.quit(),
             Message::Echo(s) => self.echo(s),
-            Message::Move { x, y } => self.move_position(Point::new(x, y)),
+            Message::Move(point) => self.move_position(point),
         }
     }
 }

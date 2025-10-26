@@ -3,11 +3,40 @@
 	This problem requires you to implement a sorting algorithm
 	you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
 
-fn sort<T>(array: &mut [T]){
-	//TODO
+fn sort<T>(array: &mut [T])
+where
+    T: PartialOrd + Clone,
+{
+	let n = array.len();
+    if n < 2 {
+        return;
+    }
+    sort(&mut array[..n/2]);
+    sort(&mut array[n/2..]);
+    let mut p1 = 0;
+    let mut p2 = n/2;
+    let mut v = vec![];
+    while p1 < n/2 && p2 < n {
+        if array[p1] <= array[p2]{
+            v.push(array[p1].clone());
+            p1 += 1;
+        } else if array[p1] > array[p2] {
+            v.push(array[p2].clone());
+            p2 += 1;
+        }
+    }
+    while p1 < n/2 {
+        v.push(array[p1].clone());
+        p1 += 1;
+    }
+    while p2 < n {
+        v.push(array[p2].clone());
+        p2 += 1;
+    }
+    array.clone_from_slice(&v);
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -4,7 +4,7 @@
 // hint.
 
 fn main() {
+    let option: Option<i32> = Some(12);
     let res = 42 + option.map_or(0, |x| x);
-    println!("{}", res);
     println!("{}", res);
 }

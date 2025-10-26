@@ -8,3 +8,4 @@ fn main() {
     let res = 42 + option.map_or(0, |x| x);
     println!("{}", res);
 }
+
